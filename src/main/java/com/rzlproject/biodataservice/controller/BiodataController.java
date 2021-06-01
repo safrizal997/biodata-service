@@ -30,4 +30,14 @@ public class BiodataController {
     public Biodata insertNewBiodata(@RequestBody BiodataRequest biodataRequest){
         return biodataService.insertNewBiodata(biodataRequest);
     }
+
+    @PutMapping(path = "/{id}")
+    public Biodata updateBiodata(@PathVariable("id") Long id,@RequestBody BiodataRequest biodataRequest){
+        return biodataService.updateBiodata(id, biodataRequest);
+    }
+
+    @DeleteMapping(path = "/{id}")
+    public void deleteBiodata(@PathVariable("id") Long id){
+        biodataService.deleteBiodataById(id);
+    }
 }

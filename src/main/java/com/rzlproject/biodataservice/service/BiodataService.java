@@ -15,7 +15,7 @@ public interface BiodataService {
 
     Biodata updateBiodata(Long id, BiodataRequest biodataRequest);
 
-    String deleteBiodataById(Long id);
+    void deleteBiodataById(Long id);
 
 
 }

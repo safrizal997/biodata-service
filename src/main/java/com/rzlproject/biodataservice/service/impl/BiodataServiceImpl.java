@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+
 @Service
 public class BiodataServiceImpl implements BiodataService {
 
@@ -35,6 +36,22 @@ public class BiodataServiceImpl implements BiodataService {
 
         Biodata biodata = new Biodata();
 
+        return newBiodata(biodataRequest, biodata);
+    }
+
+    @Override
+    public Biodata updateBiodata(Long id, BiodataRequest biodataRequest) {
+        Optional<Biodata> findBiodataId = biodataRepository.findById(id);
+        if(findBiodataId.isPresent()){
+            Biodata biodata = findBiodataId.get();
+
+            return newBiodata(biodataRequest, biodata);
+        }
+
+        return null;
+    }
+
+    private Biodata newBiodata(BiodataRequest biodataRequest, Biodata biodata) {
         biodata.setCreateBy(biodataRequest.getCreateBy());
         biodata.setCreateOn(new Date());
         biodata.setModifiedBy(biodataRequest.getModifiedBy());
@@ -85,12 +102,17 @@ public class BiodataServiceImpl implements BiodataService {
     }
 
     @Override
-    public Biodata updateBiodata(Long id, BiodataRequest biodataRequest) {
-        return null;
-    }
+    public void deleteBiodataById(Long id) {
 
-    @Override
-    public String deleteBiodataById(Long id) {
-        return null;
+        biodataRepository.findById(id).ifPresent(biodata -> {
+            biodataRepository.delete(biodata);
+        });
+
+//        if (findBiodataId.isPresent()){
+//            Biodata biodata = findBiodataId.get();
+//            biodataRepository.delete(biodata);
+//        }
+
+
     }
 }
